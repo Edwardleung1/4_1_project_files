@@ -16,6 +16,8 @@ function loadEventListeners() {
   taskList.addEventListener("click", removeTask);
   // Clear task event
   clearBtn.addEventListener("click", clearTasks);
+  // Filter tasks event
+  filter.addEventListener("keyup", filterTasks);
 }
 
 // Add Task
@@ -67,4 +69,19 @@ function clearTasks() {
   }
 
   // https://https://jsperf.com/innerhtml-vs-removechild/47
+}
+
+// Filter Tasks
+function filterTasks(e) {
+  const text = e.target.value.toLowerCase(); // Get us what is typed in
+
+  // querySelectorAll returns a nodeList so we can use a forEach()
+  document.querySelectorAll(".collection-item").forEach(function (task) {
+    const item = task.firstChild.textContent;
+    if (item.toLowerCase().indexOf(text) != -1) {
+      task.style.display = "block";
+    } else {
+      task.style.display = "none";
+    }
+  });
 }
